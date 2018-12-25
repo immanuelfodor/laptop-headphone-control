@@ -1,0 +1,13 @@
+[Unit]
+Description=Headphone Button Control (Media Volume Mute/Unmute)
+Documentation=https://github.com/immanuelfodor/laptop-headphone-control
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/soundmeter -v -t +16000 2 -a exec -e /usr/local/bin/headphonebc.sh --segment 0.2
+Restart=on-failure
+User=%i
+Group=%i
+
+[Install]
+WantedBy=multi-user.target
