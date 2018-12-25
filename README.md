@@ -69,7 +69,7 @@ Try it out if it works and what levels your headphone button click produces:
 soundmeter
 ```
 
-Mine is usually around ~200-300. When I accidentally touch the cord, it peaks around ~4000. However, button clicks are around ~15000-19000, so I'll use `16000` as trigger level (with 100% mic volume). 
+Mine is usually around ~200-300. When I speak or accidentally touch the cord, it peaks around ~4000-5000. However, button clicks are around ~15000-19000, so I'll use `16000` as trigger level (with 100% mic volume). 
 
 If you see some warnings/errors in the output, ignore it if the volume level is displayed successfully at the last line.
 
@@ -97,12 +97,12 @@ sudo git clone https://github.com/immanuelfodor/laptop-headphone-control /opt/he
 # should display 'Active: active (running)' when successfully started
 ```
 
-Congrats, the service is up and running now!
+Congrats, the service is up and running now! :tada:
 
 Notes:
 - The `install` step also tries to `enable` the service for the current user, no need to run it separately.
 - The above `connect(2) call to /dev/shm/...` warnings/errors can be present in the `systemctl status` output without volume level at the end. These lines are part of normal behavior, don't worry. 
-- If you see `Active: failed` and `(code=exited, status=1/FAILURE)` messages in the `systemctl status` output, close all open soundcard-related windows, then run the `enable` (or `install`) commands multiple times to solve it.
+- If you see `Active: failed` and `(code=exited, status=1/FAILURE)` messages in the `systemctl status` output, close all open soundcard-related windows (e.g., Pulse Audio Settings), then run the `enable` (or `install`) commands multiple times to solve it.
 
 ### Starting to use
 
@@ -163,7 +163,7 @@ OSError: [Errno -9997] Invalid sample rate
 
 - When the mic volume is set to lower than 100% in the OS volume settings, the volume of the button click can be below the trigger's threshold. You should always set it to 100% to overcome this issue.
 - My service settings might not suit your needs with a different headphone and/or laptop. If you want to tune the trigger's threshold (`-t`) or the interval of the recording (`--segment`), you can now only do it in the `headphonebc@.service` file. Run the `remove` and `install` commands in this order to apply any changes to the service. It is advisable to run the command after the `ExecStart=` key in a separate console window for testing purposes, and then only copy the perfect settings back to apply as a service.
-- As the mic input is used to determine clicks, I accidentally found out that a sneeze also counts as a click :grinning: You can also mute/unmute the sound by blowing directly into the mic.
+- As the mic input is used to determine clicks, I accidentally found out that a sneeze also counts as a click :grinning: You can also mute/unmute the sound by blowing directly into the mic _(fun)_.
 - As the service is run by `systemd`, the environment is different from your user's env. This is why muting equals to ~6% of volume (at least on my laptop), and unmuting restores the original volume with ~1-3% difference than the original volume. If you want complete silence, look into the `headphonebc.sh` file.
 - It would be nice to create an AUR package from this repo.
 
@@ -176,7 +176,9 @@ Tested with the below configuration. In theory, it should work with any laptop a
 - Laptop
   - Lenovo ThinkPad X380 Yoga 
 - Headphones
+  - Audio-technica ATH-MSR7
   - JBL Synchros S200a
+  - Sennheiser CX 5.00G
 - Soundmeter
   - 0.1.5
 
